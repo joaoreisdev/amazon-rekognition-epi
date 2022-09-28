@@ -13,14 +13,25 @@ def detect_labels(photo):
     with open(photo, 'rb') as image:
         response = client.detect_labels(Image={'Bytes': image.read()})
 
-    print()   
-    for label in response['Labels']:
+    #print(response)   
+
+    obj_inds = [objs['Name'] for objs in response['Labels'] if objs['Confidence'] > 85]
+    print(obj_inds)
+
+    if ('Person' in obj_inds) and ('Hardhat' not in obj_inds):
+        print('BIP')
+    elif ('Person' in obj_inds) and ('Hardhat' in obj_inds):
+        print('OK')
+            
+
+
+    '''for label in response['Labels']:
 
         if (label['Confidence'] > 80 and ( label['Name'] in ['Hardhat','Person'])):
             print ("Label: " + label['Name'])
             print ("Confidence: " + str(label['Confidence']))
             if (label['Name'] in ['Hardhat']):
-                print ("==============CAPACETE IDENTIFICADO===============")
+                print ("==============CAPACETE IDENTIFICADO===============")'''
     #print (response)
     print('')
     return response
@@ -78,3 +89,5 @@ if __name__ == "__main__":
 
 #asdas
 #asasd
+#AS
+
