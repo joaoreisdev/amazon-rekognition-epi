@@ -4,6 +4,7 @@ import cv2 as cv
 import time
 from PIL import Image
 import asyncio
+import winsound
 
 #@asyncio.coroutine
 def detect_labels(photo):
@@ -19,7 +20,8 @@ def detect_labels(photo):
     print(obj_inds)
 
     if ('Person' in obj_inds) and ('Hardhat' not in obj_inds):
-        print('BIP')
+        alarme()
+        print('Sem Capacete')
     elif ('Person' in obj_inds) and ('Hardhat' in obj_inds):
         print('OK')
             
@@ -82,6 +84,10 @@ def main():
     label_count=detect_labels(photo)
     #print("Labels detected: " + str(label_count))
 
+def alarme():
+    duration = 1000  # milliseconds
+    freq = 1000  # Hz
+    winsound.Beep(freq, duration)
 
 if __name__ == "__main__":
     open_camera()
